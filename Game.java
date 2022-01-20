@@ -74,6 +74,7 @@ public class Game {
   public static boolean movesLeft() {
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
+        if (board[i][j] == 0) return true;
         if (j != board[i].length - 1) {
           if (board[i][j] == board[i][j+1]) return true;
         }
@@ -103,6 +104,8 @@ public class Game {
     boolean merged = false;
     boolean shifted = false;
     for (int col = 0; col <= 3; col++) {
+      boolean temp = shiftDown(col);
+      if (temp) shifted = true;
       for (int row = 3; row > 0; row--) {
         if (board[row][col] == board[row-1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
@@ -110,7 +113,7 @@ public class Game {
           board[row-1][col] = 0;
           merged = true;
         }
-        boolean temp = shiftDown(col);
+        temp = shiftDown(col);
         if (temp) shifted = true;
       }
     }
@@ -133,6 +136,8 @@ public class Game {
     boolean merged = false;
     boolean shifted = false;
     for (int col = 0; col <= 3; col++) {
+      boolean temp = shiftUp(col);
+      if (temp) shifted = true;
       for (int row = 0; row < 3; row++) {
         if (board[row][col] == board[row+1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
@@ -141,7 +146,7 @@ public class Game {
           merged = true;
         }
       }
-      boolean temp = shiftUp(col);
+      temp = shiftUp(col);
       if (temp) shifted = true;
     }
     return (merged || shifted);
@@ -165,6 +170,8 @@ public class Game {
     boolean merged = false;
     boolean shifted = false;
     for (int row = 0; row <= 3; row++) {
+      boolean temp = shiftRight(row);
+      if (temp) shifted = true;
       for (int col = 3; col > 0; col--) {
         if (board[row][col] == board[row][col-1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
@@ -172,7 +179,7 @@ public class Game {
           board[row][col-1] = 0;
           merged = true;
         }
-        boolean temp = shiftRight(row);
+        temp = shiftRight(row);
         if (temp) shifted = true;
       }
     }
@@ -195,6 +202,8 @@ public class Game {
     boolean merged = false;
     boolean shifted = false;
     for (int row = 0; row <= 3; row++) {
+      boolean temp = shiftLeft(row);
+      if (temp) shifted = true;
       for (int col = 0; col < 3; col++) {
         if (board[row][col] == board[row][col+1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
@@ -203,7 +212,7 @@ public class Game {
           merged = true;
         }
       }
-      boolean temp = shiftLeft(row);
+      temp = shiftLeft(row);
       if (temp) shifted = true;
     }
     return (merged || shifted);
