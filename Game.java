@@ -5,24 +5,30 @@ public class Game {
   public static int[][] board = new int[4][4];
 
   public static void main(String[] args) {
-    // Text.clear();
-    // Text.hideCursor();
-    // drawBorder();
-    // Text.go(4, 6);
-    // System.out.print(Text.colorize("4", Text.WHITE));
-    // Text.go(4, 15);
-    // System.out.print(Text.colorize("512", Text.WHITE));
-    // Text.go(27, 1);
-    // Text.showCursor();
-    // printBoardArray();
-    for (int i = 0; i < 16; i++) {
-      addToBoard();
+    run();
+  }
+
+  public static void run() {
+    Text.hideCursor();
+    Text.clear();
+    Text.go(1,1);
+
+    Scanner in = new Scanner(System.in);
+    String input = "";
+    boolean moved = true;
+    addToBoard();
+    while( !(input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) && movesLeft()) {
+      if (moved) addToBoard();
+      drawBoard();
+      Text.go(26, 1);
+      System.out.print(Text.colorize("Enter q or quit to end the game.", Text.WHITE));
+      Text.go(27, 1);
+      System.out.print(Text.colorize("Enter W, A, S, and D to moved up, left, down and right.", Text.WHITE));
+      Text.go(28, 1);
+      if (input.equals("s")) moved = down();
+      Text.showCursor();
+      input = in.nextLine();
     }
-    printBoardArray();
-    left();
-    printBoardArray();
-    up();
-    printBoardArray();
   }
 
   public static void drawBorder() {
@@ -34,6 +40,29 @@ public class Game {
     for (int i = 0; i < 5; i++) {
       int x = 1 + (i*10);
       DrawScreen.drawVertical(1, x, 25);
+    }
+  }
+
+  public static void drawBoard() {
+    Text.clear();
+    drawBorder();
+    Text.hideCursor();
+    for (int row = 0; row < 4; row++) {
+      for (int col = 0; col < 4; col++) {
+        if (board[row][col] == 0) DrawScreen.drawBlank(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 2) DrawScreen.draw2(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 4) DrawScreen.draw4(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 8) DrawScreen.draw8(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 16) DrawScreen.draw16(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 32) DrawScreen.draw32(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 64) DrawScreen.draw64(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 128) DrawScreen.draw128(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 256) DrawScreen.draw256(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 512) DrawScreen.draw512(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 1024) DrawScreen.draw1024(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 2048) DrawScreen.draw2048(row*6 + 2, col*10 + 2);
+        else if (board[row][col] == 4096) DrawScreen.draw4096(row*6 + 2, col*10 + 2);
+      }
     }
   }
 
@@ -65,16 +94,19 @@ public class Game {
     }
   }
 
-  public static void down() {
+  public static boolean down() {
+    boolean moved = false;
     for (int col = 0; col <= 3; col++) {
       for (int row = 3; row > 0; row--) {
-        if (board[row][col] == board[row-1][col]) {
+        if (board[row][col] == board[row-1][col] && board[row][col]) {
           board[row][col] = 2*(board[row][col]);
           board[row-1][col] = 0;
+          moved = true;
         }
         shiftDown(col);
       }
     }
+    return moved;
   }
 
   public static void shiftDown(int col) {
@@ -86,16 +118,19 @@ public class Game {
     }
   }
 
-  public static void up() {
+  public static boolean up() {
+    boolean moved = false;
     for (int col = 0; col <= 3; col++) {
       for (int row = 0; row < 3; row++) {
-        if (board[row][col] == board[row+1][col]) {
+        if (board[row][col] == board[row+1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
           board[row+1][col] = 0;
+          moved = true;
         }
       }
       shiftUp(col);
     }
+    return moved;
   }
 
   public static void shiftUp(int col) {
@@ -109,16 +144,19 @@ public class Game {
     }
   }
 
-  public static void right() {
+  public static boolean right() {
+    boolean moved = false;
     for (int row = 0; row <= 3; row++) {
       for (int col = 3; col > 0; col--) {
-        if (board[row][col] == board[row][col-1]) {
+        if (board[row][col] == board[row][col-1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
           board[row][col-1] = 0;
+          moved = true;
         }
         shiftRight(row);
       }
     }
+    return moved;
   }
 
   public static void shiftRight(int row) {
@@ -130,16 +168,19 @@ public class Game {
     }
   }
 
-  public static void left() {
+  public static boolean left() {
+    boolean moved = false;
     for (int row = 0; row <= 3; row++) {
       for (int col = 0; col < 3; col++) {
-        if (board[row][col] == board[row][col+1]) {
+        if (board[row][col] == board[row][col+1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
           board[row][col+1] = 0;
+          moved = true;
         }
       }
       shiftLeft(row);
     }
+    return moved;
   }
 
   public static void shiftLeft(int row) {
