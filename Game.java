@@ -120,7 +120,7 @@ public class Game {
   public static boolean shiftDown(int col) {
     boolean shift = false;
     for (int i = 3; i > 0; i--) {
-      if (board[i][col] == 0) {
+      if (board[i][col] == 0 && board[i-1][col] != 0) {
         board[i][col] = board[i-1][col];
         board[i-1][col] = 0;
         shift = true;
@@ -151,7 +151,7 @@ public class Game {
     boolean shift = false;
     for (int x = 0; x < 4; x++) {
       for (int i = 0; i < 3; i++) {
-        if (board[i][col] == 0) {
+        if (board[i][col] == 0 && board[i+1][col] != 0) {
           board[i][col] = board[i+1][col];
           board[i+1][col] = 0;
           shift = true;
@@ -182,7 +182,7 @@ public class Game {
   public static boolean shiftRight(int row) {
     boolean shift = false;
     for (int i = 3; i > 0; i--) {
-      if (board[row][i] == 0) {
+      if (board[row][i] == 0 && board[row][i-1] != 0) {
         board[row][i] = board[row][i-1];
         board[row][i-1] = 0;
         shift = true;
@@ -213,7 +213,7 @@ public class Game {
     boolean shift = false;
     for (int x = 0; x < 4; x++) {
       for (int i = 0; i < 3; i++) {
-        if (board[row][i] == 0) {
+        if (board[row][i] == 0 && board[row][i+1] != 0) {
           board[row][i] = board[row][i+1];
           board[row][i+1] = 0;
           shift = true;
