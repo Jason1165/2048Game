@@ -95,27 +95,31 @@ public class Game {
   }
 
   public static boolean down() {
-    boolean moved = false;
+    boolean merged = false;
+    boolean shifted = false;
     for (int col = 0; col <= 3; col++) {
       for (int row = 3; row > 0; row--) {
-        if (board[row][col] == board[row-1][col] && board[row][col]) {
+        if (board[row][col] == board[row-1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
           board[row-1][col] = 0;
-          moved = true;
+          merged = true;
         }
-        shiftDown(col);
+        shifted = shiftDown(col);
       }
     }
-    return moved;
+    return (merged || shifted);
   }
 
-  public static void shiftDown(int col) {
+  public static boolean shiftDown(int col) {
+    boolean shift = false;
     for (int i = 3; i > 0; i--) {
       if (board[i][col] == 0) {
         board[i][col] = board[i-1][col];
         board[i-1][col] = 0;
+        shift = true;
       }
     }
+    return shift;
   }
 
   public static boolean up() {
