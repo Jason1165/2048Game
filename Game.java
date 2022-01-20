@@ -18,6 +18,7 @@ public class Game {
     boolean moved = true;
     addToBoard();
     while( !(input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) && movesLeft()) {
+      if (input.equals("s")) moved = down();
       if (moved) addToBoard();
       drawBoard();
       Text.go(26, 1);
@@ -25,7 +26,6 @@ public class Game {
       Text.go(27, 1);
       System.out.print(Text.colorize("Enter W, A, S, and D to moved up, left, down and right.", Text.WHITE));
       Text.go(28, 1);
-      if (input.equals("s")) moved = down();
       Text.showCursor();
       input = in.nextLine();
     }
