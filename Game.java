@@ -15,11 +15,11 @@ public class Game {
     // Text.go(27, 1);
     // Text.showCursor();
     // printBoardArray();
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 16; i++) {
       addToBoard();
     }
     printBoardArray();
-    down();
+    right();
     printBoardArray();
     up();
     printBoardArray();
@@ -93,19 +93,43 @@ public class Game {
           board[row][col] = 2*(board[row][col]);
           board[row+1][col] = 0;
         }
-        shiftUp(col);
       }
+      shiftUp(col);
     }
   }
 
   public static void shiftUp(int col) {
-    for (int i = 0; i < 3; i++) {
-      if (board[i][col] == 0) {
-        board[i][col] = board[i+1][col];
-        board[i+1][col] = 0;
+    for (int x = 0; x < 4; x++) {
+      for (int i = 0; i < 3; i++) {
+        if (board[i][col] == 0) {
+          board[i][col] = board[i+1][col];
+          board[i+1][col] = 0;
+        }
       }
     }
   }
+
+  public static void right() {
+    for (int row = 0; row <= 3; row++) {
+      for (int col = 3; col > 0; col--) {
+        if (board[row][col] == board[row][col-1]) {
+          board[row][col] = 2*(board[row][col]);
+          board[row][col-1] = 0;
+        }
+        shiftRight(row);
+      }
+    }
+  }
+
+  public static void shiftRight(int row) {
+    for (int i = 3; i > 0; i--) {
+      if (board[row][i] == 0) {
+        board[row][i] = board[row][i-1];
+        board[row][i-1] = 0;
+      }
+    }
+  }
+
 
   public static void printBoardArray() {
     String s = "";
