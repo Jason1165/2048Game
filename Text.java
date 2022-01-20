@@ -54,6 +54,15 @@ public class Text{
   public static String colorize(String text,int c1,int c2,int c3){
     return ("\u001b[" + c1 + ";" + c2 + ";" + c3 + "m"+text+"\u001b[0m");
   }
+  public static String colorizeBackground(String text, int r, int g, int b) {
+    return ("\u001b[48;2;" + r + ";" + g + ";" + b + "m" + text + "\u001b[0m");
+  }
+  public static String colorizeBackground(String text, int r, int g, int b, int c1) {
+    return ("\u001b[48;2;" + r + ";" + g + ";" + b + ";" + c1 + "m" + text + "\u001b[0m");
+  }
+  public static String colorizeBackground(String text, int r, int g, int b, int c1, int c2) {
+    return ("\u001b[48;2;" + r + ";" + g + ";" + b + ";" + c1 + ";" + c2 + "m" + text + "\u001b[0m");
+  }
 
 
   //Tested and working in:
