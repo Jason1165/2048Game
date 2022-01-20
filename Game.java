@@ -19,7 +19,7 @@ public class Game {
       addToBoard();
     }
     printBoardArray();
-    right();
+    left();
     printBoardArray();
     up();
     printBoardArray();
@@ -130,6 +130,28 @@ public class Game {
     }
   }
 
+  public static void left() {
+    for (int row = 0; row <= 3; row++) {
+      for (int col = 0; col < 3; col++) {
+        if (board[row][col] == board[row][col+1]) {
+          board[row][col] = 2*(board[row][col]);
+          board[row][col+1] = 0;
+        }
+      }
+      shiftLeft(row);
+    }
+  }
+
+  public static void shiftLeft(int row) {
+    for (int x = 0; x < 4; x++) {
+      for (int i = 0; i < 3; i++) {
+        if (board[row][i] == 0) {
+          board[row][i] = board[row][i+1];
+          board[row][i+1] = 0;
+        }
+      }
+    }
+  }
 
   public static void printBoardArray() {
     String s = "";
