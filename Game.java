@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Game {
   public static int[][] board = new int[4][4];
+  public static int score = 0;
 
   public static void main(String[] args) {
     run();
@@ -18,7 +19,11 @@ public class Game {
     boolean moved = true;
     addToBoard();
     while( !(input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) && movesLeft()) {
-      if (input.equals("s")) moved = down();
+      moved = false;
+      if (input.equalsIgnoreCase("s")) moved = down();
+      if (input.equalsIgnoreCase("w")) moved = up();
+      if (input.equalsIgnoreCase("a")) moved = left();
+      if (input.equalsIgnoreCase("d")) moved = right();
       if (moved) addToBoard();
       drawBoard();
       Text.go(26, 1);
@@ -101,10 +106,12 @@ public class Game {
       for (int row = 3; row > 0; row--) {
         if (board[row][col] == board[row-1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
+          score += board[row][col];
           board[row-1][col] = 0;
           merged = true;
         }
-        shifted = shiftDown(col);
+        boolean temp = shiftDown(col);
+        if (temp) shifted = true;
       }
     }
     return (merged || shifted);
@@ -123,79 +130,97 @@ public class Game {
   }
 
   public static boolean up() {
-    boolean moved = false;
+    boolean merged = false;
+    boolean shifted = false;
     for (int col = 0; col <= 3; col++) {
       for (int row = 0; row < 3; row++) {
         if (board[row][col] == board[row+1][col] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
+          score += board[row][col];
           board[row+1][col] = 0;
-          moved = true;
+          merged = true;
         }
       }
-      shiftUp(col);
+      boolean temp = shiftUp(col);
+      if (temp) shifted = true;
     }
-    return moved;
+    return (merged || shifted);
   }
 
-  public static void shiftUp(int col) {
+  public static boolean shiftUp(int col) {
+    boolean shift = false;
     for (int x = 0; x < 4; x++) {
       for (int i = 0; i < 3; i++) {
         if (board[i][col] == 0) {
           board[i][col] = board[i+1][col];
           board[i+1][col] = 0;
+          shift = true;
         }
       }
     }
+    return shift;
   }
 
   public static boolean right() {
-    boolean moved = false;
+    boolean merged = false;
+    boolean shifted = false;
     for (int row = 0; row <= 3; row++) {
       for (int col = 3; col > 0; col--) {
         if (board[row][col] == board[row][col-1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
+          score += board[row][col];
           board[row][col-1] = 0;
-          moved = true;
+          merged = true;
         }
-        shiftRight(row);
+        boolean temp = shiftRight(row);
+        if (temp) shifted = true;
       }
     }
-    return moved;
+    return (merged || shifted);
   }
 
-  public static void shiftRight(int row) {
+  public static boolean shiftRight(int row) {
+    boolean shift = false;
     for (int i = 3; i > 0; i--) {
       if (board[row][i] == 0) {
         board[row][i] = board[row][i-1];
         board[row][i-1] = 0;
+        shift = true;
       }
     }
+    return shift;
   }
 
   public static boolean left() {
-    boolean moved = false;
+    boolean merged = false;
+    boolean shifted = false;
     for (int row = 0; row <= 3; row++) {
       for (int col = 0; col < 3; col++) {
         if (board[row][col] == board[row][col+1] && board[row][col] != 0) {
           board[row][col] = 2*(board[row][col]);
+          score += board[row][col];
           board[row][col+1] = 0;
-          moved = true;
+          merged = true;
         }
       }
-      shiftLeft(row);
+      boolean temp = shiftLeft(row);
+      if (temp) shifted = true;
     }
-    return moved;
+    return (merged || shifted);
   }
 
-  public static void shiftLeft(int row) {
+  public static boolean shiftLeft(int row) {
+    boolean shift = false;
     for (int x = 0; x < 4; x++) {
       for (int i = 0; i < 3; i++) {
         if (board[row][i] == 0) {
           board[row][i] = board[row][i+1];
           board[row][i+1] = 0;
+          shift = true;
         }
       }
     }
+    return shift;
   }
 
   public static void printBoardArray() {
