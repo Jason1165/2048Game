@@ -157,7 +157,7 @@ public class DrawScreen {
     Text.go(xcor+1, ycor + 3);
     System.out.print(Text.colorizeBackground("4 0", 120, 161, 54, Text.BLACK, Text.BOLD));
     Text.go(xcor+3, ycor + 3);
-    System.out.print(Text.colorizeBackground("9 6", 120, 161, 54 Text.BLACK, Text.BOLD));
+    System.out.print(Text.colorizeBackground("9 6", 120, 161, 54, Text.BLACK, Text.BOLD));
   }
 
 }
