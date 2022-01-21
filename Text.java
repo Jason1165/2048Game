@@ -63,27 +63,8 @@ public class Text{
   public static String colorizeBackground(String text, int r, int g, int b, int c1, int c2) {
     return ("\u001b[48;2;" + r + ";" + g + ";" + b + ";" + c1 + ";" + c2 + "m" + text + "\u001b[0m");
   }
-
-
-  //Tested and working in:
-  //git-bash (windows 10),    wsl (windows 10+11),   powershell windows 11
+  
   public static void main(String[] args) {
-    hideCursor();
-    clear();
 
-    go(1,1);
-    System.out.println("Abra cadabra hocus pocus...");
-    System.out.println("Abra "+colorize("cadabra",BOLD,YELLOW+BRIGHT,BLUE+BACKGROUND)+" hocus pocus...");
-    System.out.println(colorize("Abra",BOLD,BLACK,YELLOW+BACKGROUND+BRIGHT)+" cadabra hocus pocus...");
-
-    go(1,1);//top left
-    System.out.print("TOP!");//overwrites the "Abra" on line 1
-
-    go(4,30);
-    System.out.print("right?");
-
-    go(5,1);//put the terminal at the end of the output again before the program ends.
-    reset();
-    showCursor();
   }
 }
