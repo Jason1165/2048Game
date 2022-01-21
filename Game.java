@@ -246,16 +246,4 @@ public class Game {
     return shift;
   }
 
-  public static void printBoardArray() {
-    String s = "";
-    for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 4; j++) {
-        s += board[i][j] + " ";
-      }
-      s += "\n";
-    }
-    System.out.println(s);
-  }
-
-
 }
