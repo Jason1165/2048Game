@@ -63,8 +63,9 @@ public class Text{
   public static String colorizeBackground(String text, int r, int g, int b, int c1, int c2) {
     return ("\u001b[48;2;" + r + ";" + g + ";" + b + ";" + c1 + ";" + c2 + "m" + text + "\u001b[0m");
   }
-  
+
   public static void main(String[] args) {
 
+    
   }
 }
